@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "noEmit": false,
+    "rootDir": "src/tools-pa",
+    "outDir": "dist/types"
+  },
+  "include": ["src/tools-pa/**/*.ts"],
+  "exclude": ["src/**/*.spec.ts"]
+}

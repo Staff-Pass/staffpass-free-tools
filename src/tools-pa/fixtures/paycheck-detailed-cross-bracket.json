@@ -1,0 +1,286 @@
+{
+  "name": "quincena detallada con horas extra, bono e ISR cruzando de tramo 1 a tramo 2",
+  "fn": "calculatePaycheck",
+  "input": {
+    "monthlySalary": "800",
+    "periodStart": "2026-10-01",
+    "periodEnd": "2026-10-15",
+    "mode": "DETAILED",
+    "overtime": [
+      {
+        "dayType": "ORDINARY",
+        "workPeriod": "DAY",
+        "hours": "2"
+      }
+    ],
+    "additionalIncome": [
+      {
+        "concept": "Bono de producción",
+        "amount": "1000"
+      }
+    ],
+    "voluntaryDeductions": [
+      {
+        "concept": "Préstamo interno",
+        "amount": "20"
+      }
+    ]
+  },
+  "expected": {
+    "value": {
+      "periodDays": 15,
+      "baseSalary": "400.00",
+      "overtimeTotal": "9.62",
+      "additionalIncomeTotal": "1000.00",
+      "gross": "1409.62",
+      "cssEmployee": "137.44",
+      "educationEmployee": "17.62",
+      "isrWithholding": "61.44",
+      "voluntaryDeductionsTotal": "20.00",
+      "totalDeductions": "236.50",
+      "net": "1173.12",
+      "employerCost": "1617.53"
+    },
+    "lines": [
+      {
+        "concept": "Salario base de la quincena",
+        "amount": "400.00"
+      },
+      {
+        "concept": "Horas extra (diurna, 2.0000 h)",
+        "amount": "9.62",
+        "rate": "0.25",
+        "ruleCode": "HORA_EXTRA_DIURNA"
+      },
+      {
+        "concept": "Bono de producción",
+        "amount": "1000.00"
+      },
+      {
+        "concept": "Cuota de la Caja de Seguro Social (empleado)",
+        "amount": "137.44",
+        "base": "1409.62",
+        "rate": "0.0975",
+        "ruleCode": "CSS_CUOTA_EMPLEADO"
+      },
+      {
+        "concept": "Cuota de seguro educativo (empleado)",
+        "amount": "17.62",
+        "base": "1409.62",
+        "rate": "0.0125",
+        "ruleCode": "SEGURO_EDUCATIVO_EMPLEADO"
+      },
+      {
+        "concept": "Impuesto sobre la renta (ISR) retenido",
+        "amount": "61.44",
+        "base": "11409.62"
+      },
+      {
+        "concept": "Préstamo interno",
+        "amount": "-20.00"
+      },
+      {
+        "concept": "Costo total del empleador (informativo)",
+        "amount": "1617.53"
+      }
+    ],
+    "assumptions": [
+      "Quincena estándar: la mitad del salario mensual (B/.800 ÷ 2), sin importar los días calendario del período.",
+      "Salario por hora = salario mensual × 12 ÷ 52 ÷ 48 h semanales (Art. 31 Código de Trabajo, jornada ordinaria diurna).",
+      "Cada tipo de hora extra se calculó de forma independiente, sin acumular los topes diarios y semanales entre distintos tipos de recargo (Art. 36 CT); para un cálculo exacto por día trabajado, use el módulo de nómina.",
+      "El ISR se proyectó anualizando el salario mensual (× 12) más un décimo tercer mes completo (800.00 adicional), dividiendo el saldo entre 26 períodos (24 quincenas + las tres partidas del décimo). Las horas extra e ingresos adicionales de esta quincena se trataron como no recurrentes: solo se retuvo el impuesto marginal que agregan a esa proyección anual, completo en esta quincena, sin acumularlo al resto del año.",
+      "El método de retención proyectada (ISR_METODO_RETENCION) y el tratamiento de ISR sobre el décimo tercer mes (DECIMO_ISR_TRATAMIENTO) no están confirmados contra una resolución oficial de la DGI; este monto es una estimación.",
+      "No se incluyó la cuota de riesgos profesionales en el costo patronal: el catálogo de reglas de StaffPass aún no tiene una tasa oficial confirmada (RIESGOS_PROFESIONALES_CLASE). Indique la tasa que la CSS asignó a su empresa para incluirla."
+    ],
+    "rules": [
+      {
+        "code": "HORA_EXTRA_DIURNA",
+        "value": {
+          "rate": "0.25",
+          "multiplier": "1.25",
+          "workPeriod": "DAY"
+        },
+        "effectiveFrom": "1971-01-01",
+        "effectiveTo": null,
+        "legalBasis": "Código de Trabajo, Art. 33-1",
+        "documentStatus": "VERIFICADO",
+        "sourceNote": "Recargo de hora extra diurna",
+        "sourceUrl": null,
+        "verified": false
+      },
+      {
+        "code": "TOPE_HORA_EXTRA_DIARIO",
+        "value": {
+          "maximumHours": "3"
+        },
+        "effectiveFrom": "1971-01-01",
+        "effectiveTo": null,
+        "legalBasis": "Código de Trabajo, Art. 36",
+        "documentStatus": "VERIFICADO",
+        "sourceNote": "Tope diario de horas extraordinarias",
+        "sourceUrl": null,
+        "verified": false
+      },
+      {
+        "code": "TOPE_HORA_EXTRA_SEMANAL",
+        "value": {
+          "maximumHours": "9"
+        },
+        "effectiveFrom": "1971-01-01",
+        "effectiveTo": null,
+        "legalBasis": "Código de Trabajo, Art. 36",
+        "documentStatus": "VERIFICADO",
+        "sourceNote": "Tope semanal de horas extraordinarias",
+        "sourceUrl": null,
+        "verified": false
+      },
+      {
+        "code": "RECARGO_EXCEDENTE_TOPE",
+        "value": {
+          "rate": "0.75",
+          "multiplier": "1.75"
+        },
+        "effectiveFrom": "1971-01-01",
+        "effectiveTo": null,
+        "legalBasis": "Código de Trabajo, Art. 36",
+        "documentStatus": "VERIFICADO",
+        "sourceNote": "Recargo del excedente de los topes",
+        "sourceUrl": null,
+        "verified": false
+      },
+      {
+        "code": "CSS_CUOTA_EMPLEADO",
+        "value": {
+          "rate": "0.0975",
+          "contributionType": "CSS",
+          "payer": "EMPLOYEE"
+        },
+        "effectiveFrom": "2025-03-18",
+        "effectiveTo": null,
+        "legalBasis": "Ley 51 de 2005, reformada por Ley 462 de 2025",
+        "documentStatus": "NO_VERIFICADO",
+        "sourceNote": "Tasa secundaria pendiente de texto oficial CSS/Gaceta",
+        "sourceUrl": null,
+        "verified": false
+      },
+      {
+        "code": "SEGURO_EDUCATIVO_EMPLEADO",
+        "value": {
+          "rate": "0.0125",
+          "contributionType": "EDUCATION",
+          "payer": "EMPLOYEE"
+        },
+        "effectiveFrom": "1987-01-01",
+        "effectiveTo": null,
+        "legalBasis": "Decreto de Gabinete 168 de 1971, Ley 13 de 1987 (pendiente de confirmar)",
+        "documentStatus": "NO_VERIFICADO",
+        "sourceNote": "La base legal citada difiere de otra referencia del requerimiento",
+        "sourceUrl": null,
+        "verified": false
+      },
+      {
+        "code": "ISR_BRACKET_1",
+        "value": {
+          "annualFrom": "0",
+          "annualTo": "11000",
+          "rate": "0"
+        },
+        "effectiveFrom": "2010-01-01",
+        "effectiveTo": null,
+        "legalBasis": "Código Fiscal, Art. 700, reformado por Ley 8 de 2010",
+        "documentStatus": "NO_VERIFICADO",
+        "sourceNote": "Tramo secundario pendiente de confirmación DGI",
+        "sourceUrl": null,
+        "verified": false
+      },
+      {
+        "code": "ISR_BRACKET_2",
+        "value": {
+          "annualFrom": "11000",
+          "annualTo": "50000",
+          "rate": "0.15"
+        },
+        "effectiveFrom": "2010-01-01",
+        "effectiveTo": null,
+        "legalBasis": "Código Fiscal, Art. 700, reformado por Ley 8 de 2010",
+        "documentStatus": "NO_VERIFICADO",
+        "sourceNote": "Tramo secundario pendiente de confirmación DGI",
+        "sourceUrl": null,
+        "verified": false
+      },
+      {
+        "code": "ISR_BRACKET_3",
+        "value": {
+          "annualFrom": "50000",
+          "annualTo": null,
+          "rate": "0.25"
+        },
+        "effectiveFrom": "2010-01-01",
+        "effectiveTo": null,
+        "legalBasis": "Código Fiscal, Art. 700, reformado por Ley 8 de 2010",
+        "documentStatus": "NO_VERIFICADO",
+        "sourceNote": "Tramo secundario pendiente de confirmación DGI",
+        "sourceUrl": null,
+        "verified": false
+      },
+      {
+        "code": "ISR_METODO_RETENCION",
+        "value": {
+          "projection": true,
+          "includeThirteenth": true,
+          "divideByRemainingPeriods": true
+        },
+        "effectiveFrom": "2010-01-01",
+        "effectiveTo": null,
+        "legalBasis": "Resolución DGI pendiente de localizar",
+        "documentStatus": "NO_VERIFICADO",
+        "sourceNote": "Método de retención descrito solo por fuentes secundarias",
+        "sourceUrl": null,
+        "verified": false
+      },
+      {
+        "code": "DECIMO_ISR_TRATAMIENTO",
+        "value": {
+          "treatment": null
+        },
+        "effectiveFrom": "1971-11-18",
+        "effectiveTo": null,
+        "legalBasis": "Código Fiscal, Art. 708 (pendiente de confirmar)",
+        "documentStatus": "NO_VERIFICADO",
+        "sourceNote": "Fuentes secundarias en conflicto",
+        "sourceUrl": null,
+        "verified": false
+      },
+      {
+        "code": "CSS_CUOTA_PATRONAL_TRAMO1",
+        "value": {
+          "rate": "0.1325"
+        },
+        "effectiveFrom": "2025-03-18",
+        "effectiveTo": "2027-03-01",
+        "legalBasis": "Ley 462 de 2025",
+        "documentStatus": "NO_VERIFICADO",
+        "sourceNote": "Tramo secundario sin confirmación de fuente oficial",
+        "sourceUrl": null,
+        "verified": false
+      },
+      {
+        "code": "SEGURO_EDUCATIVO_PATRONAL",
+        "value": {
+          "rate": "0.015",
+          "contributionType": "EDUCATION",
+          "payer": "EMPLOYER",
+          "exclusionMonth": "THIRTEENTH"
+        },
+        "effectiveFrom": "1987-01-01",
+        "effectiveTo": null,
+        "legalBasis": "Decreto de Gabinete 168 de 1971, Ley 13 de 1987 (pendiente de confirmar)",
+        "documentStatus": "NO_VERIFICADO",
+        "sourceNote": "Tasa y exclusión del mes del décimo pendientes de confirmar",
+        "sourceUrl": null,
+        "verified": false
+      }
+    ],
+    "estimate": true
+  }
+}

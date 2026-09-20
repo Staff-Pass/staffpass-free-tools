@@ -1,0 +1,35 @@
+{
+  "name": "validación de contrato vacío -> todos los campos requeridos faltan",
+  "fn": "validateContract",
+  "input": {},
+  "expected": {
+    "missing": [
+      "employer.legalName",
+      "employer.ruc",
+      "employer.dv",
+      "employer.representativeName",
+      "employer.representativeCedula",
+      "employer.address",
+      "employee.fullName",
+      "employee.nationality",
+      "employee.age",
+      "employee.sex",
+      "employee.civilStatus",
+      "employee.address",
+      "employee.cedula",
+      "position.service",
+      "position.duties",
+      "position.workplace",
+      "position.startDate",
+      "position.workday",
+      "position.schedule",
+      "compensation.salaryAmount",
+      "compensation.paymentMethod",
+      "compensation.paymentPeriod",
+      "compensation.paymentPlace",
+      "signature.place",
+      "signature.date"
+    ],
+    "invalid": []
+  }
+}

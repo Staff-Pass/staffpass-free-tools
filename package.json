@@ -1,0 +1,57 @@
+{
+  "name": "@staffpass/free-tools-pa",
+  "version": "1.0.0",
+  "description": "Motor y aplicaci\u00f3n web aut\u00f3noma para herramientas laborales de Panam\u00e1.",
+  "type": "module",
+  "private": true,
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=24.0.0 <26"
+  },
+  "packageManager": "pnpm@12.5.1",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src/tools-pa/fixtures",
+    "README.md",
+    "THIRD_PARTY_NOTICES.md",
+    "LICENSE",
+    "NOTICE",
+    "licenses"
+  ],
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "pnpm build && serve dist-web",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "check:architecture": "node scripts/check-architecture.mjs",
+    "check:secrets": "node scripts/check-secrets.mjs",
+    "check": "pnpm check:architecture && pnpm check:secrets && pnpm typecheck && pnpm test && pnpm build",
+    "audit": "pnpm audit --prod"
+  },
+  "dependencies": {
+    "decimal.js": "10.6.0",
+    "pdf-lib": "1.17.1"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.2",
+    "esbuild": "0.28.2",
+    "serve": "14.2.6",
+    "typescript": "7.0.2",
+    "vitest": "5.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Staff-Pass/staffpass-free-tools.git"
+  },
+  "homepage": "https://github.com/Staff-Pass/staffpass-free-tools#readme",
+  "bugs": {
+    "url": "https://github.com/Staff-Pass/staffpass-free-tools/issues"
+  }
+}

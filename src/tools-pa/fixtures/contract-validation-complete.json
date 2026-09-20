@@ -1,0 +1,45 @@
+{
+  "name": "validación de contrato con todos los campos completos",
+  "fn": "validateContract",
+  "input": {
+    "employer": {
+      "legalName": "Acme Panamá, S.A.",
+      "ruc": "155646465-2-2015",
+      "dv": "32",
+      "representativeName": "Juan Pérez",
+      "representativeCedula": "8-123-4567",
+      "address": "Calle 50, Panamá"
+    },
+    "employee": {
+      "fullName": "María López",
+      "nationality": "panameña",
+      "age": "30",
+      "sex": "F",
+      "civilStatus": "soltera",
+      "address": "San Miguelito",
+      "cedula": "8-765-4321"
+    },
+    "position": {
+      "service": "comercio al por menor",
+      "duties": "atención al cliente",
+      "workplace": "sucursal Multiplaza",
+      "startDate": "2026-10-01",
+      "workday": "diurna",
+      "schedule": "8:00 a.m. a 5:00 p.m., lunes a viernes"
+    },
+    "compensation": {
+      "salaryAmount": "1500",
+      "paymentMethod": "transferencia",
+      "paymentPeriod": "quincenal",
+      "paymentPlace": "oficina principal"
+    },
+    "signature": {
+      "place": "Ciudad de Panamá",
+      "date": "2026-09-25"
+    }
+  },
+  "expected": {
+    "missing": [],
+    "invalid": []
+  }
+}

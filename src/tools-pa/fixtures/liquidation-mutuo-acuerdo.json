@@ -1,0 +1,126 @@
+{
+  "name": "liquidación por mutuo acuerdo, 3 años de servicio, sin indemnización",
+  "fn": "calculateLiquidation",
+  "input": {
+    "contractType": "INDEFINIDO",
+    "cause": "mutuo_acuerdo",
+    "startDate": "2023-06-30",
+    "endDate": "2026-06-30",
+    "lastMonthlySalary": "1000",
+    "pendingSalaryAmount": "150"
+  },
+  "expected": {
+    "value": {
+      "pendingSalary": {
+        "concept": "Salarios pendientes",
+        "amount": "150.00",
+        "applies": true,
+        "reason": "Todo salario trabajado y no pagado se debe, sin importar la causa de terminación.",
+        "ruleCodes": []
+      },
+      "vacations": {
+        "concept": "Vacaciones proporcionales",
+        "amount": "278.79",
+        "applies": true,
+        "reason": "Las vacaciones proporcionales se pagan en efectivo al terminar la relación laboral, cualquiera sea la causa (Art. 54-6 Código de Trabajo).",
+        "ruleCodes": ["VACACIONES_COMPENSACION_TERMINO", "VACACIONES_PROPORCIONAL"]
+      },
+      "thirteenthProportional": {
+        "concept": "Décimo tercer mes proporcional",
+        "amount": "211.11",
+        "applies": true,
+        "reason": "El décimo tercer mes se devenga con el tiempo trabajado y se paga proporcionalmente al terminar la relación, cualquiera sea la causa (Decreto de Gabinete 221 de 1971).",
+        "ruleCodes": ["DECIMO_FORMULA_BASE", "DECIMO_PRORRATEO_PARCIAL"]
+      },
+      "seniorityPremium": {
+        "concept": "Prima de antigüedad",
+        "amount": "692.94",
+        "applies": true,
+        "reason": "La prima de antigüedad se paga a la terminación de todo contrato por tiempo indefinido, cualquiera sea la causa, incluida la renuncia (Art. 224 Código de Trabajo).",
+        "ruleCodes": ["PRIMA_ANTIGUEDAD"]
+      },
+      "indemnity": {
+        "concept": "Indemnización por despido injustificado",
+        "amount": "0.00",
+        "applies": false,
+        "reason": "La indemnización del Art. 225 Código de Trabajo solo aplica a despidos injustificados; no aplica a mutuo acuerdo. Si el acuerdo incluye un pago adicional, es un pacto contractual y no una prestación calculada aquí.",
+        "ruleCodes": []
+      },
+      "total": "1332.84"
+    },
+    "lines": [
+      { "concept": "Salarios pendientes", "amount": "150.00" },
+      { "concept": "Vacaciones proporcionales", "amount": "278.79", "ruleCode": "VACACIONES_COMPENSACION_TERMINO" },
+      { "concept": "Décimo tercer mes proporcional", "amount": "211.11", "ruleCode": "DECIMO_FORMULA_BASE" },
+      { "concept": "Prima de antigüedad", "amount": "692.94", "ruleCode": "PRIMA_ANTIGUEDAD" },
+      { "concept": "Indemnización por despido injustificado", "amount": "0.00" },
+      { "concept": "Total de la liquidación", "amount": "1332.84" }
+    ],
+    "assumptions": [
+      "No se declaró historial salarial ni promedio; se usó el último salario mensual como aproximación del promedio de los últimos 5 años (Art. 226 Código de Trabajo). Si el salario varió, declare el historial para un cálculo más preciso.",
+      "Los años de servicio se calcularon como días entre las fechas declaradas ÷ 365: 1096 día(s) ≈ 3.0027 año(s).",
+      "Esta calculadora no incluye el preaviso (Art. 212 Código de Trabajo) ni beneficios contractuales o de convención colectiva; solo cubre las prestaciones legales listadas.",
+      "No se declararon días de vacaciones pendientes: se calcularon proporcionalmente (días ÷ 11, Art. 54-3 CT) desde el 2026-03-30 — inicio del ciclo de 11 meses en curso — hasta la terminación, asumiendo que los ciclos completos anteriores ya se disfrutaron. Si conoce el saldo exacto, declárelo directamente para un cálculo más preciso.",
+      "Se asumió que el décimo se pagó puntualmente hasta el 2026-04-15; solo se calcula el cuatrimestre en curso.",
+      "El décimo proporcional se calculó sobre el salario devengado desde 2026-04-15 hasta la terminación (76 día(s) × último salario ÷ 30), dividido entre 12; el tratamiento exacto de un cuatrimestre incompleto no está confirmado en la fuente (DECIMO_PRORRATEO_PARCIAL), así que este monto se muestra como estimación."
+    ],
+    "rules": [
+      {
+        "code": "VACACIONES_COMPENSACION_TERMINO",
+        "value": { "serviceDays": "11", "grantDays": "1", "payment": "CASH_AT_TERMINATION" },
+        "effectiveFrom": "1971-01-01",
+        "effectiveTo": null,
+        "legalBasis": "Código de Trabajo, Art. 54-6",
+        "documentStatus": "VERIFICADO",
+        "sourceNote": "Compensación proporcional al finalizar la relación",
+        "sourceUrl": null,
+        "verified": false
+      },
+      {
+        "code": "VACACIONES_PROPORCIONAL",
+        "value": { "serviceDays": "11", "grantDays": "1", "formula": "SERVICE_DAYS_DIVIDED_BY_11" },
+        "effectiveFrom": "1971-01-01",
+        "effectiveTo": null,
+        "legalBasis": "Código de Trabajo, Art. 54-3",
+        "documentStatus": "VERIFICADO",
+        "sourceNote": "Tratamiento proporcional documentado",
+        "sourceUrl": null,
+        "verified": false
+      },
+      {
+        "code": "DECIMO_FORMULA_BASE",
+        "value": { "formula": "SUM_CUATRIMESTRE_DIVIDED_BY_12", "divisor": "12" },
+        "effectiveFrom": "1971-11-18",
+        "effectiveTo": null,
+        "legalBasis": "Decreto de Gabinete No. 221 de 18-nov-1971",
+        "documentStatus": "VERIFICADO",
+        "sourceNote": "Fórmula general del documento",
+        "sourceUrl": null,
+        "verified": false
+      },
+      {
+        "code": "DECIMO_PRORRATEO_PARCIAL",
+        "value": { "formula": null, "status": "BLOCKED_UNTIL_LEGAL_REVIEW" },
+        "effectiveFrom": "1971-11-18",
+        "effectiveTo": null,
+        "legalBasis": "Decreto de Gabinete No. 221 de 18-nov-1971",
+        "documentStatus": "NO_VERIFICADO",
+        "sourceNote": "El tratamiento de cuatrimestre parcial es ambiguo",
+        "sourceUrl": null,
+        "verified": false
+      },
+      {
+        "code": "PRIMA_ANTIGUEDAD",
+        "value": { "weeksPerServiceYear": "1", "base": "AVERAGE_TOTAL_REMUNERATION_LAST_5_YEARS" },
+        "effectiveFrom": "1971-01-01",
+        "effectiveTo": null,
+        "legalBasis": "Código de Trabajo, Art. 224",
+        "documentStatus": "VERIFICADO",
+        "sourceNote": "Una semana por año laborado",
+        "sourceUrl": null,
+        "verified": false
+      }
+    ],
+    "estimate": true
+  }
+}

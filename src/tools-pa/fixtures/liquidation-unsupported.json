@@ -1,0 +1,16 @@
+{
+  "name": "liquidación con causa no soportada (despido justificado) -> unsupported",
+  "fn": "calculateLiquidation",
+  "input": {
+    "contractType": "INDEFINIDO",
+    "cause": "despido_justificado",
+    "startDate": "2023-06-30",
+    "endDate": "2026-06-30",
+    "lastMonthlySalary": "1000"
+  },
+  "expected": {
+    "status": "unsupported",
+    "reason": "Esta calculadora solo cubre las causas de terminación renuncia, despido injustificado y mutuo acuerdo. La causa declarada (\"despido_justificado\") no está soportada; use la calculadora oficial de MITRADEL.",
+    "officialUrl": "https://appstrabajo.mitradel.gob.pa/prestaciones/"
+  }
+}

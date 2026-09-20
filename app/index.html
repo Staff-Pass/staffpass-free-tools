@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Herramientas laborales gratuitas de Panamá que funcionan localmente en tu navegador.">
+  <title>StaffPass Free Tools — Panamá</title>
+  <link rel="icon" type="image/svg+xml" href="./assets/brand/staffpass-icon-dark.svg">
+  <link rel="stylesheet" href="./assets/styles.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="shell">
+      <a href="https://staffpass.app/" aria-label="StaffPass"><img class="brand-logo" src="./assets/brand/staffpass-logo-horizontal-light.svg" alt="StaffPass" width="290" height="43"></a>
+      <p class="eyebrow">StaffPass Free Tools · Panamá · Apache-2.0</p>
+      <h1>Herramientas laborales que funcionan en tu navegador</h1>
+      <p>Calcula una quincena o liquidación, arma un comprobante y prepara un borrador de contrato. No hay cuenta, analítica ni servidor: los datos permanecen en este dispositivo.</p>
+      <div class="privacy-note"><strong>Importante:</strong> son estimaciones. Las reglas del catálogo aún requieren revisión legal independiente y no sustituyen asesoría profesional ni trámites ante CSS, DGI o MITRADEL.</div>
+    </div>
+  </header>
+
+  <main class="shell">
+    <nav class="tool-nav" aria-label="Herramientas">
+      <a href="#quincena">Quincena</a>
+      <a href="#comprobante">Comprobante</a>
+      <a href="#contrato">Contrato</a>
+      <a href="#liquidacion">Liquidación</a>
+    </nav>
+
+    <section class="tool" id="quincena">
+      <div class="section-head"><span>01</span><div><h2>Calculadora de quincena</h2><p>Salario base, CSS, seguro educativo, ISR estimado y costo patronal.</p></div></div>
+      <form id="paycheck-form" class="form-grid">
+        <label>Salario mensual (B/.)<input name="monthlySalary" type="number" min="0.01" step="0.01" required value="1000"></label>
+        <label>Inicio del período<input name="periodStart" type="date" required></label>
+        <label>Fin del período<input name="periodEnd" type="date" required></label>
+        <label>Modo<select name="mode"><option value="SIMPLE">Sencillo</option><option value="DETAILED">Detallado</option></select></label>
+        <label>Horas extra diurnas<input name="overtimeHours" type="number" min="0" step="0.25" value="0"></label>
+        <label>Ingresos adicionales<input name="additionalIncome" type="number" min="0" step="0.01" value="0"></label>
+        <label>Deducciones voluntarias<input name="voluntaryDeductions" type="number" min="0" step="0.01" value="0"></label>
+        <button type="submit">Calcular quincena</button>
+      </form>
+      <div id="paycheck-result" class="result" aria-live="polite"></div>
+    </section>
+
+    <section class="tool" id="comprobante">
+      <div class="section-head"><span>02</span><div><h2>Comprobante de pago</h2><p>Genera un PDF local. No prueba que el pago se haya realizado.</p></div></div>
+      <form id="payslip-form" class="form-grid">
+        <label>Empresa<input name="company" required></label>
+        <label>Empleado<input name="employee" required></label>
+        <label>Período<input name="period" placeholder="1–15 de septiembre de 2026" required></label>
+        <label>Referencia opcional<input name="reference"></label>
+        <label class="wide">Ingresos, uno por línea <small>Formato: concepto | monto</small><textarea name="earnings" rows="4" required>Salario base | 500.00</textarea></label>
+        <label class="wide">Deducciones, una por línea <small>Formato: concepto | monto</small><textarea name="deductions" rows="4">CSS | 48.75
+Seguro educativo | 6.25</textarea></label>
+        <button type="submit">Descargar PDF</button>
+      </form>
+      <div id="payslip-result" class="result" aria-live="polite"></div>
+    </section>
+
+    <section class="tool" id="contrato">
+      <div class="section-head"><span>03</span><div><h2>Contrato por tiempo indefinido</h2><p>Borrador HTML para revisión; no es un documento aprobado ni registrado.</p></div></div>
+      <form id="contract-form" class="form-grid contract-grid">
+        <h3>Empleador</h3>
+        <label>Razón social<input name="employer.legalName" required></label><label>RUC<input name="employer.ruc" required></label>
+        <label>DV<input name="employer.dv" required></label><label>Representante legal<input name="employer.representativeName" required></label>
+        <label>Cédula del representante<input name="employer.representativeCedula" required></label><label>Dirección del empleador<input name="employer.address" required></label>
+        <h3>Empleado</h3>
+        <label>Nombre completo<input name="employee.fullName" required></label><label>Nacionalidad<input name="employee.nationality" required></label>
+        <label>Edad<input name="employee.age" type="number" min="18" required></label><label>Sexo<input name="employee.sex" required></label>
+        <label>Estado civil<input name="employee.civilStatus" required></label><label>Dirección<input name="employee.address" required></label>
+        <label>Cédula<input name="employee.cedula" required></label>
+        <h3>Puesto y condiciones</h3>
+        <label>Actividad de la empresa<input name="position.service" required></label><label>Funciones<input name="position.duties" required></label>
+        <label>Lugar de trabajo<input name="position.workplace" required></label><label>Fecha de inicio<input name="position.startDate" type="date" required></label>
+        <label>Jornada<select name="position.workday"><option>diurna</option><option>nocturna</option><option>mixta</option></select></label><label>Horario<input name="position.schedule" required></label>
+        <label>Período de prueba<select name="position.trialPeriodMonths"><option value="">Sin cláusula</option><option value="1">1 mes</option><option value="2">2 meses</option><option value="3">3 meses</option></select></label>
+        <h3>Compensación y firma</h3>
+        <label>Salario (B/.)<input name="compensation.salaryAmount" type="number" min="0.01" step="0.01" required></label>
+        <label>Forma de pago<input name="compensation.paymentMethod" value="transferencia" required></label>
+        <label>Período de pago<input name="compensation.paymentPeriod" value="quincenal" required></label>
+        <label>Lugar de pago<input name="compensation.paymentPlace" required></label>
+        <label>Lugar de firma<input name="signature.place" required></label><label>Fecha de firma<input name="signature.date" type="date" required></label>
+        <button type="submit">Validar y descargar borrador</button>
+      </form>
+      <div id="contract-result" class="result" aria-live="polite"></div>
+    </section>
+
+    <section class="tool" id="liquidacion">
+      <div class="section-head"><span>04</span><div><h2>Calculadora de liquidación</h2><p>Para contratos indefinidos: renuncia, despido injustificado o mutuo acuerdo.</p></div></div>
+      <form id="liquidation-form" class="form-grid">
+        <label>Tipo de contrato<select name="contractType"><option value="INDEFINIDO">Tiempo indefinido</option><option value="OTRO">Otro</option></select></label>
+        <label>Causa<select name="cause"><option value="renuncia">Renuncia</option><option value="despido_injustificado">Despido injustificado</option><option value="mutuo_acuerdo">Mutuo acuerdo</option><option value="despido_justificado">Despido justificado (fuera de alcance)</option></select></label>
+        <label>Fecha de inicio<input name="startDate" type="date" required></label><label>Fecha de terminación<input name="endDate" type="date" required></label>
+        <label>Último salario mensual<input name="lastMonthlySalary" type="number" min="0.01" step="0.01" required></label>
+        <label>Promedio salarial opcional<input name="averageMonthlySalary" type="number" min="0" step="0.01"></label>
+        <label>Vacaciones pendientes opcionales<input name="pendingVacationDays" type="number" min="0" step="0.01"></label>
+        <label>Décimo pagado hasta<input name="thirteenthPaidThrough" type="date"></label>
+        <label>Salarios adeudados<input name="pendingSalaryAmount" type="number" min="0" step="0.01" value="0"></label>
+        <button type="submit">Calcular liquidación</button>
+      </form>
+      <div id="liquidation-result" class="result" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer><div class="shell"><p><a href="https://staffpass.app/">StaffPass</a> · <a href="https://github.com/Staff-Pass/staffpass-free-tools">Código y documentación</a> · <a href="./THIRD_PARTY_NOTICES.md">Licencias de terceros</a></p>Motor <span id="engine-version"></span> · Reglas <span id="rules-version"></span> · Procesamiento 100% local · <a href="https://www.mitradel.gob.pa/" rel="noreferrer">MITRADEL</a></div></footer>
+  <script type="module" src="./assets/app.js"></script>
+</body>
+</html>
