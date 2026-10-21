@@ -1,12 +1,12 @@
 {
   "name": "@staffpass/free-tools-pa",
   "version": "1.0.0",
-  "description": "Motor y aplicaci\u00f3n web aut\u00f3noma para herramientas laborales de Panam\u00e1.",
+  "description": "Motor y aplicación web autónoma para herramientas laborales de Panamá.",
   "type": "module",
   "private": true,
   "license": "Apache-2.0",
   "engines": {
-    "node": ">=24.0.0 <26"
+    "node": ">=24.22.1 <25"
   },
   "packageManager": "pnpm@12.5.1",
   "exports": {

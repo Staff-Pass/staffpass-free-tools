@@ -17,7 +17,7 @@ La aplicación web procesa todo localmente en el navegador. No contiene API, bas
 
 ## Requisitos
 
-- Node.js 24 o 25 (la versión de desarrollo está en `.node-version`).
+- Node.js 24.22.1 LTS (la versión de desarrollo está en `.node-version`).
 - pnpm 12.5.1 mediante Corepack.
 
 ## Instalar y validar
