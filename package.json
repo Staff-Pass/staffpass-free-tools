@@ -6,7 +6,7 @@
   "private": true,
   "license": "Apache-2.0",
   "engines": {
-    "node": ">=24.0.0 <26"
+    "node": ">=24.22.1 <25"
   },
   "packageManager": "pnpm@12.5.1",
   "exports": {
